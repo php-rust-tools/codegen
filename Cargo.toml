@@ -1,0 +1,16 @@
+[package]
+name = "php_codegen"
+version = "0.1.0"
+edition = "2021"
+description = "Generate PHP code from Rust 🐘"
+readme = "README.md"
+repository = "https://github.com/php-rust-tools/codegen"
+documentation = "https://docs.rs/php_codegen"
+homepage = "https://github.com/php-rust-tools/codegen"
+exclude = ["/.github/*"]
+authors = ["Saif Eddin Gmati <azjezz@protonmail.com>"]
+license = "MIT OR Apache-2.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
