@@ -6,7 +6,7 @@ use crate::modifiers::VisibilityModifier;
 use crate::Generator;
 use crate::Indentation;
 
-#[derive(Debug, PartialEq, PartialOrd, Clone)]
+#[derive(Debug)]
 pub struct Parameter {
     pub attributes: Vec<AttributeGroup>,
     pub name: String,

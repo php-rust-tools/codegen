@@ -17,6 +17,8 @@
 - [x] Code generation for return types
 - [x] Code generation for type hints
 - [x] Code generation for modifiers
+- [x] Code generation for visibility
+- [x] Code generation for function/method bodies
 - [ ] Code generation for interfaces
 - [ ] Code generation for enums
 - [ ] Code generation for traits

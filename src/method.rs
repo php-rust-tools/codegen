@@ -1,4 +1,7 @@
+use core::fmt::Debug;
+
 use crate::attribute::AttributeGroup;
+use crate::body::Body;
 use crate::comment::Document;
 use crate::data_type::DataType;
 use crate::modifiers::Modifier;
@@ -7,14 +10,14 @@ use crate::parameter::Parameter;
 use crate::Generator;
 use crate::Indentation;
 
-#[derive(Debug, PartialEq, PartialOrd, Clone)]
+#[derive(Debug)]
 pub struct Method {
     pub documentation: Option<Document>,
     pub attributes: Vec<AttributeGroup>,
     pub name: String,
     pub parameters: Vec<Parameter>,
     pub return_type: Option<DataType>,
-    pub body: Option<String>,
+    pub body: Body,
     pub modifiers: Vec<Modifier>,
     pub visibility: Option<VisibilityModifier>,
 }
@@ -25,7 +28,7 @@ impl Method {
             name: name.to_string(),
             parameters: vec![],
             return_type: None,
-            body: None,
+            body: Body::default(),
             modifiers: vec![],
             attributes: vec![],
             documentation: None,
@@ -87,8 +90,8 @@ impl Method {
         self
     }
 
-    pub fn body<T: ToString>(mut self, body: T) -> Self {
-        self.body = Some(body.to_string());
+    pub fn body<T: Into<Body>>(mut self, body: T) -> Self {
+        self.body = body.into().with_semicolon_for_empty(true);
 
         self
     }
@@ -156,13 +159,7 @@ impl Generator for Method {
             code.push_str(format!(": {}", return_type.generate(indentation, level)).as_str());
         }
 
-        if let Some(body) = &self.body {
-            code.push_str(&" {\n");
-            code.push_str(&indentation.indent(body, level + 1));
-            code.push_str(&format!("\n{}}}\n", indentation.value(level)));
-        } else {
-            code.push_str(";\n");
-        }
+        code.push_str(&self.body.generate(indentation, level));
 
         code
     }

@@ -7,7 +7,7 @@ use crate::modifiers::VisibilityModifier;
 use crate::Generator;
 use crate::Indentation;
 
-#[derive(Debug, PartialEq, PartialOrd, Clone)]
+#[derive(Debug)]
 pub struct Property {
     pub documentation: Option<Document>,
     pub attributes: Vec<AttributeGroup>,

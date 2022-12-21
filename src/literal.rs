@@ -1,7 +1,7 @@
 use crate::Generator;
 use crate::Indentation;
 
-#[derive(Debug, PartialEq, PartialOrd, Clone)]
+#[derive(Debug)]
 pub enum Value {
     Null,
     True,

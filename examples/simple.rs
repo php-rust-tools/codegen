@@ -11,6 +11,7 @@ use php_codegen::method::Method;
 use php_codegen::modifiers::Modifier;
 use php_codegen::parameter::Parameter;
 use php_codegen::property::Property;
+use php_codegen::Indentation;
 
 fn main() {
     let file = File::new()
@@ -138,6 +139,16 @@ fn main() {
                         .modifier(Modifier::Abstract)
                         .returns(DataType::Void)
                         .document(Document::new().text("This is a simple poop function.")),
+                )
+                .method(
+                    Method::new("helloWorld")
+                        .public()
+                        .modifier(Modifier::Final)
+                        .returns(DataType::Void)
+                        .document(Document::new().text("This is a simple echo function."))
+                        .body(|indentation: Indentation, level| {
+                            indentation.indent("echo 'Hello World!';", level)
+                        }),
                 ),
         );
 

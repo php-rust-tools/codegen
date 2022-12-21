@@ -1,7 +1,7 @@
 use crate::Generator;
 use crate::Indentation;
 
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Hash)]
+#[derive(Debug)]
 pub enum DataType {
     Named(String),
     Nullable(Box<DataType>),

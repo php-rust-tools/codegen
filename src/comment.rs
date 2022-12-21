@@ -1,14 +1,14 @@
 use crate::Generator;
 use crate::Indentation;
 
-#[derive(Debug, PartialEq, PartialOrd, Clone)]
+#[derive(Debug)]
 pub enum Element {
     Tag(String, String),
     Text(String),
     EmptyLine,
 }
 
-#[derive(Debug, PartialEq, PartialOrd, Clone)]
+#[derive(Debug)]
 pub struct Document {
     pub elements: Vec<Element>,
 }
@@ -67,7 +67,11 @@ impl Generator for Document {
             }
 
             for line in element.lines() {
-                code.push_str(&format!("{} * {}\n", indentation.value(level), line));
+                code.push_str(&format!(
+                    "{} * {}\n",
+                    indentation.value(level),
+                    line.trim_end()
+                ));
             }
         }
 

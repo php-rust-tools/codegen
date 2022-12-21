@@ -7,7 +7,7 @@ use crate::property::Property;
 use crate::Generator;
 use crate::Indentation;
 
-#[derive(Debug, PartialEq, PartialOrd, Clone)]
+#[derive(Debug)]
 pub struct Class {
     pub documentation: Option<Document>,
     pub attributes: Vec<AttributeGroup>,

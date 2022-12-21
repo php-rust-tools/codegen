@@ -1,4 +1,5 @@
 pub mod attribute;
+pub mod body;
 pub mod class;
 pub mod comment;
 pub mod constant;

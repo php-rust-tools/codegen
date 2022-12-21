@@ -6,7 +6,7 @@ use crate::modifiers::VisibilityModifier;
 use crate::Generator;
 use crate::Indentation;
 
-#[derive(Debug, PartialEq, PartialOrd, Clone)]
+#[derive(Debug)]
 pub struct Constant {
     pub documentation: Option<Document>,
     pub name: String,
@@ -63,7 +63,7 @@ impl<T: ToString, Tv: Into<Value>> From<(T, Tv)> for Constant {
     }
 }
 
-#[derive(Debug, PartialEq, PartialOrd, Clone)]
+#[derive(Debug)]
 pub struct ClassConstant {
     pub documentation: Option<Document>,
     pub attributes: Vec<AttributeGroup>,

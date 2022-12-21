@@ -32,7 +32,7 @@ const G = [1, 25];
  *
  * @return string
  *
- * @pure 
+ * @pure
  */
 #[Qux(foo: 1, bar: 2)]
 function hello(
@@ -50,7 +50,7 @@ function nothing(): void {
 /**
  * This is an example class.
  *
- * @immutable 
+ * @immutable
  */
 abstract class Example
 {
@@ -75,7 +75,7 @@ abstract class Example
      *
      * @return string
      *
-     * @pure 
+     * @pure
      */
     #[Qux(foo: 1, bar: 2), Qux(foo: 1, bar: 2)]
     function hello(
@@ -88,7 +88,7 @@ abstract class Example
     /**
      * This is a simple x function.
      *
-     * @pure 
+     * @pure
      */
     #[Foo(foo: 1, bar: 2), Bar(foo: 1, bar: 2)]
     #[Baz, Qux]
@@ -100,5 +100,12 @@ abstract class Example
      * This is a simple poop function.
      */
     public abstract function poop(): void;
+
+    /**
+     * This is a simple echo function.
+     */
+    public final function helloWorld(): void {
+        echo 'Hello World!';
+    }
 }
 

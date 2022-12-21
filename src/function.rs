@@ -1,18 +1,19 @@
 use crate::attribute::AttributeGroup;
+use crate::body::Body;
 use crate::comment::Document;
 use crate::data_type::DataType;
 use crate::parameter::Parameter;
 use crate::Generator;
 use crate::Indentation;
 
-#[derive(Debug, PartialEq, PartialOrd, Clone)]
+#[derive(Debug)]
 pub struct Function {
     pub documentation: Option<Document>,
     pub attributes: Vec<AttributeGroup>,
     pub name: String,
     pub parameters: Vec<Parameter>,
     pub return_type: Option<DataType>,
-    pub body: String,
+    pub body: Body,
 }
 
 impl Function {
@@ -21,7 +22,7 @@ impl Function {
             name: name.to_string(),
             parameters: vec![],
             return_type: None,
-            body: String::from("// empty body"),
+            body: Body::new().with_semicolon_for_empty(false),
             attributes: vec![],
             documentation: None,
         }
@@ -51,8 +52,9 @@ impl Function {
         self
     }
 
-    pub fn body<T: ToString>(mut self, body: T) -> Self {
-        self.body = body.to_string();
+    pub fn body<T: Into<Body>>(mut self, body: T) -> Self {
+        self.body = body.into();
+        self.body = self.body.with_semicolon_for_empty(false);
 
         self
     }
@@ -86,7 +88,8 @@ impl Generator for Function {
         } else {
             code.push_str("(\n");
             code.push_str(
-                &self.parameters
+                &self
+                    .parameters
                     .iter()
                     .map(|parameter| parameter.generate(indentation, level + 1))
                     .collect::<Vec<String>>()
@@ -101,12 +104,7 @@ impl Generator for Function {
             code.push_str(format!(": {}", return_type.generate(indentation, level)).as_str());
         }
 
-        code.push_str(" {\n");
-
-        code.push_str(&indentation.indent(&self.body, level + 1));
-
-        code.push_str("\n");
-        code.push_str("}\n");
+        code.push_str(&self.body.generate(indentation, level));
 
         code
     }

@@ -1,7 +1,7 @@
 use crate::Generator;
 use crate::Indentation;
 
-#[derive(Debug, PartialEq, PartialOrd, Clone)]
+#[derive(Debug)]
 pub enum Modifier {
     Abstract,
     Final,
@@ -9,7 +9,7 @@ pub enum Modifier {
     Static,
 }
 
-#[derive(Debug, PartialEq, PartialOrd, Clone)]
+#[derive(Debug)]
 pub enum VisibilityModifier {
     Public,
     Protected,

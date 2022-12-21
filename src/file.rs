@@ -7,7 +7,7 @@ use crate::literal::Value;
 use crate::Generator;
 use crate::Indentation;
 
-#[derive(Debug, PartialEq, PartialOrd, Clone)]
+#[derive(Debug)]
 pub struct File {
     pub namespace: Option<String>,
     pub declares: Vec<(String, Value)>,
