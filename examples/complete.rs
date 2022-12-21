@@ -66,10 +66,7 @@ fn main() {
         .function(Function::new("nothing").returns(DataType::Void))
         .function(
             Function::new("format")
-                .parameter(
-                    Parameter::new("template")
-                        .typed(DataType::String)
-                )
+                .parameter(Parameter::new("template").typed(DataType::String))
                 .parameter(
                     Parameter::new("args")
                         .variadic()
