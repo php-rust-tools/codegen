@@ -4,6 +4,7 @@ use crate::constant::ClassConstant;
 use crate::method::Method;
 use crate::modifiers::Modifier;
 use crate::property::Property;
+use crate::usage::Usage;
 use crate::Generator;
 use crate::Indentation;
 
@@ -15,6 +16,7 @@ pub struct Class {
     pub name: String,
     pub extends: Option<String>,
     pub implements: Vec<String>,
+    pub usages: Vec<Usage>,
     pub constants: Vec<ClassConstant>,
     pub properties: Vec<Property>,
     pub methods: Vec<Method>,
@@ -29,6 +31,7 @@ impl Class {
             name: name.to_string(),
             extends: None,
             implements: vec![],
+            usages: vec![],
             constants: vec![],
             properties: vec![],
             methods: vec![],
@@ -61,6 +64,12 @@ impl Class {
 
     pub fn implements<T: ToString>(mut self, implements: T) -> Self {
         self.implements.push(implements.to_string());
+
+        self
+    }
+
+    pub fn using<T: Into<Usage>>(mut self, usage: T) -> Self {
+        self.usages.push(usage.into());
 
         self
     }
@@ -118,6 +127,19 @@ impl Generator for Class {
         }
 
         code.push_str("\n{\n");
+
+        if !self.usages.is_empty() {
+            code.push_str(
+                &self
+                    .usages
+                    .iter()
+                    .map(|usage| usage.generate(indentation, level + 1))
+                    .collect::<Vec<String>>()
+                    .join("\n"),
+            );
+
+            code.push('\n');
+        }
 
         if !self.constants.is_empty() {
             code.push_str(

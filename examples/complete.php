@@ -64,6 +64,21 @@ function format(
  */
 abstract class Example extends Foo\Bar\Baz implements Foo\Bar\BazInterface
 {
+    use A;
+
+    use B, C;
+
+    use D, E, F, G {
+        E::bar as baz;
+        D::foo as public bar;
+        E::qux as public;
+        D::format as protected;
+        D::d as private;
+        D::drop insteadof E;
+        G::something insteadof E, F, D;
+        E::e as protected;
+    }
+
     final const A = "Hello World!";
 
     protected const B = null;

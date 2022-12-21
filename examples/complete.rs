@@ -10,8 +10,10 @@ use php_codegen::interface::Interface;
 use php_codegen::literal::Value;
 use php_codegen::method::Method;
 use php_codegen::modifiers::Modifier;
+use php_codegen::modifiers::VisibilityModifier;
 use php_codegen::parameter::Parameter;
 use php_codegen::property::Property;
+use php_codegen::usage::Usage;
 use php_codegen::Indentation;
 
 fn main() {
@@ -98,6 +100,24 @@ fn main() {
                             .simple_tag("immutable"),
                     )
                     .modifier(Modifier::Abstract)
+                    .using("A")
+                    .using(vec!["B", "C"])
+                    .using(
+                        Usage::new(vec![
+                            "D".to_string(),
+                            "E".to_string(),
+                            "F".to_string(),
+                            "G".to_string(),
+                        ])
+                        .rename("E::bar", "baz")
+                        .alias("D::foo", "bar", VisibilityModifier::Public)
+                        .public("E::qux")
+                        .protected("D::format")
+                        .private("D::d")
+                        .precede("D::drop", vec!["E"])
+                        .precede("G::something", vec!["E", "F", "D"])
+                        .visibility("E::e", VisibilityModifier::Protected),
+                    )
                     .constant(
                         ClassConstant::new("A")
                             .valued("Hello World!")
