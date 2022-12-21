@@ -20,4 +20,3 @@ function format(
         array_filter($args, static fn ($arg) => $arg !== null)
     ));
 }
-

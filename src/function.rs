@@ -65,37 +65,37 @@ impl Generator for Function {
         let mut code = String::new();
 
         if let Some(document) = &self.documentation {
-            code.push_str(&document.generate(indentation, level));
+            code.push_str(document.generate(indentation, level).as_str());
         }
 
         for attribute in &self.attributes {
-            code.push_str(&attribute.generate(indentation, level));
+            code.push_str(attribute.generate(indentation, level).as_str());
         }
 
         code.push_str(format!("function {}", self.name).as_str());
-
-        if self.parameters.is_empty() {
-            code.push_str("()");
-        } else {
-            code.push_str("(\n");
-            code.push_str(
-                &self
-                    .parameters
-                    .iter()
-                    .map(|parameter| parameter.generate(indentation, level + 1))
-                    .collect::<Vec<String>>()
-                    .join(",\n"),
-            );
-
-            code.push_str(",\n");
-            code.push(')');
-        }
+        code.push_str(self.parameters.generate(indentation, level).as_str());
 
         if let Some(return_type) = &self.return_type {
             code.push_str(format!(": {}", return_type.generate(indentation, level)).as_str());
         }
 
-        code.push_str(&self.body.generate(indentation, level));
+        code.push_str(self.body.generate(indentation, level).as_str());
+
+        code
+    }
+}
+
+impl Generator for Vec<Function> {
+    fn generate(&self, indentation: Indentation, level: usize) -> String {
+        let mut code = String::new();
+        if self.is_empty() {
+            return code;
+        }
+
+        for function in self {
+            code.push_str(function.generate(indentation, level).as_str());
+            code.push('\n');
+        }
 
         code
     }

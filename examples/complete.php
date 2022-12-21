@@ -18,11 +18,17 @@ use const Foo\HEY;
 
 
 const A = "Hello World!";
+
 const B = null;
+
 const C = 1;
+
 const D = false;
+
 const E = null;
+
 const F = 213.412;
+
 const G = [1, 25];
 
 /**
@@ -65,9 +71,7 @@ function format(
 abstract class Example extends Foo\Bar\Baz implements Foo\Bar\BazInterface
 {
     use A;
-
     use B, C;
-
     use D, E, F, G {
         E::bar as baz;
         D::foo as public bar;
@@ -140,9 +144,7 @@ abstract class Example extends Foo\Bar\Baz implements Foo\Bar\BazInterface
 trait ExampleTrait
 {
     use A;
-
     use B, C;
-
     use D, E, F, G {
         E::bar as baz;
         D::foo as public bar;
@@ -202,6 +204,55 @@ trait ExampleTrait
 }
 
 /**
+ * This is an example unit enum.
+ */
+enum ExampleUnitEnum
+{
+    use A;
+    use B, C;
+    use D, E, F, G {
+        E::bar as baz;
+        D::foo as public bar;
+        E::qux as public;
+        D::format as protected;
+        D::d as private;
+        D::drop insteadof E;
+        G::something insteadof E, F, D;
+        E::e as protected;
+    }
+
+    /**
+     * This is a foo case.
+     */
+    case Foo;
+
+    /**
+     * This is a bar case.
+     */
+    case Bar;
+
+    case Baz;
+}
+
+/**
+ * This is an example string backed enum.
+ */
+enum ExampleStringBackEnum: string
+{
+    /**
+     * This is a foo case.
+     */
+    case Foo = "foo value";
+
+    /**
+     * This is a bar case.
+     */
+    case Bar = "bar value";
+
+    case Baz = "baz value";
+}
+
+/**
  * This is a simple formatter interface.
  *
  * @immutable
@@ -214,4 +265,3 @@ interface Formatter extends Qux
         int|float|string|null ...$args,
     ): string;
 }
-

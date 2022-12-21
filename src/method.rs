@@ -128,29 +128,29 @@ impl Generator for Method {
         }
 
         code.push_str(format!("function {}", self.name).as_str());
-
-        if self.parameters.is_empty() {
-            code.push_str("()");
-        } else {
-            code.push_str("(\n");
-            code.push_str(
-                &self
-                    .parameters
-                    .iter()
-                    .map(|parameter| parameter.generate(indentation, level + 1))
-                    .collect::<Vec<String>>()
-                    .join(",\n"),
-            );
-
-            code.push_str(",\n");
-            code.push_str(&indentation.indent(")", level));
-        }
+        code.push_str(&self.parameters.generate(indentation, level));
 
         if let Some(return_type) = &self.return_type {
             code.push_str(format!(": {}", return_type.generate(indentation, level)).as_str());
         }
 
         code.push_str(&self.body.generate(indentation, level));
+
+        code
+    }
+}
+
+impl Generator for Vec<Method> {
+    fn generate(&self, indentation: Indentation, level: usize) -> String {
+        let mut code = String::new();
+        if self.is_empty() {
+            return code;
+        }
+
+        for method in self {
+            code.push_str(method.generate(indentation, level).as_str());
+            code.push('\n');
+        }
 
         code
     }

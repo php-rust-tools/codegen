@@ -120,3 +120,27 @@ impl Generator for Parameter {
         code
     }
 }
+
+impl Generator for Vec<Parameter> {
+    fn generate(&self, indentation: Indentation, level: usize) -> String {
+        let mut code = String::new();
+
+        if self.is_empty() {
+            code.push_str("()");
+        } else {
+            code.push_str("(\n");
+            code.push_str(
+                &self
+                    .iter()
+                    .map(|parameter| parameter.generate(indentation, level + 1))
+                    .collect::<Vec<String>>()
+                    .join(",\n"),
+            );
+
+            code.push_str(",\n");
+            code.push_str(&indentation.indent(")", level));
+        }
+
+        code
+    }
+}

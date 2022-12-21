@@ -130,3 +130,19 @@ impl Generator for Property {
         code
     }
 }
+
+impl Generator for Vec<Property> {
+    fn generate(&self, indentation: Indentation, level: usize) -> String {
+        let mut code = String::new();
+        if self.is_empty() {
+            return code;
+        }
+
+        for property in self.iter() {
+            code.push_str(property.generate(indentation, level).as_str());
+            code.push('\n');
+        }
+
+        code
+    }
+}

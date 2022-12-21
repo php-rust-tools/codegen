@@ -53,6 +53,22 @@ impl Generator for Constant {
     }
 }
 
+impl Generator for Vec<Constant> {
+    fn generate(&self, indentation: Indentation, level: usize) -> String {
+        let mut code = String::new();
+        if self.is_empty() {
+            return code;
+        }
+
+        for constant in self {
+            code.push_str(constant.generate(indentation, level).as_str());
+            code.push('\n');
+        }
+
+        code
+    }
+}
+
 impl<T: ToString, Tv: Into<Value>> From<(T, Tv)> for Constant {
     fn from((name, value): (T, Tv)) -> Self {
         Self {
@@ -136,24 +152,17 @@ impl ClassConstant {
 
 impl Generator for ClassConstant {
     fn generate(&self, indentation: Indentation, level: usize) -> String {
-        let mut code = indentation.value(level);
+        let mut code = String::new();
 
         if let Some(document) = &self.documentation {
             code.push_str(&document.generate(indentation, level));
         }
 
-        if !self.attributes.is_empty() {
-            code.push_str(
-                &self
-                    .attributes
-                    .iter()
-                    .map(|attributes| attributes.generate(indentation, level))
-                    .collect::<Vec<String>>()
-                    .join("\n"),
-            );
-
-            code.push('\n');
+        for attribute in &self.attributes {
+            code.push_str(&attribute.generate(indentation, level));
         }
+
+        code.push_str(&indentation.value(level));
 
         if let Some(visibility) = &self.visibility {
             code.push_str(&format!("{} ", visibility.generate(indentation, level)));
@@ -168,6 +177,22 @@ impl Generator for ClassConstant {
             self.name,
             self.value.generate(indentation, level)
         ));
+
+        code
+    }
+}
+
+impl Generator for Vec<ClassConstant> {
+    fn generate(&self, indentation: Indentation, level: usize) -> String {
+        let mut code = String::new();
+        if self.is_empty() {
+            return code;
+        }
+
+        for constant in self {
+            code.push_str(constant.generate(indentation, level).as_str());
+            code.push('\n');
+        }
 
         code
     }

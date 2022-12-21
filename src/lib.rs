@@ -4,6 +4,8 @@ pub mod class;
 pub mod comment;
 pub mod constant;
 pub mod data_type;
+pub mod r#enum;
+pub mod enum_case;
 pub mod file;
 pub mod function;
 pub mod interface;

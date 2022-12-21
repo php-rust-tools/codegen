@@ -159,6 +159,23 @@ impl Generator for Usage {
     }
 }
 
+impl Generator for Vec<Usage> {
+    fn generate(&self, indentation: Indentation, level: usize) -> String {
+        let mut code = String::new();
+        if self.is_empty() {
+            return code;
+        }
+
+        for usage in self {
+            code.push_str(usage.generate(indentation, level).as_str());
+        }
+
+        code.push('\n');
+
+        code
+    }
+}
+
 impl From<String> for Usage {
     fn from(r#trait: String) -> Self {
         Self::new(vec![r#trait])

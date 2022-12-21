@@ -65,18 +65,26 @@ impl Generator for Interface {
 
         code.push_str("\n{\n");
 
-        if !self.methods.is_empty() {
-            code.push_str(
-                &self
-                    .methods
-                    .iter()
-                    .map(|method| method.generate(indentation, level + 1))
-                    .collect::<Vec<String>>()
-                    .join("\n"),
-            );
+        code.push_str(self.methods.generate(indentation, level + 1).as_str());
+
+        code = code.trim_end().to_string();
+        code.push_str("\n}\n");
+
+        code
+    }
+}
+
+impl Generator for Vec<Interface> {
+    fn generate(&self, indentation: Indentation, level: usize) -> String {
+        let mut code = String::new();
+        if self.is_empty() {
+            return code;
         }
 
-        code.push_str("}\n");
+        for interface in self {
+            code.push_str(interface.generate(indentation, level).as_str());
+            code.push('\n');
+        }
 
         code
     }

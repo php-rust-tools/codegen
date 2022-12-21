@@ -128,57 +128,29 @@ impl Generator for Class {
 
         code.push_str("\n{\n");
 
-        if !self.usages.is_empty() {
-            code.push_str(
-                &self
-                    .usages
-                    .iter()
-                    .map(|usage| usage.generate(indentation, level + 1))
-                    .collect::<Vec<String>>()
-                    .join("\n"),
-            );
+        code.push_str(self.usages.generate(indentation, level + 1).as_str());
+        code.push_str(self.constants.generate(indentation, level + 1).as_str());
+        code.push_str(self.properties.generate(indentation, level + 1).as_str());
+        code.push_str(self.methods.generate(indentation, level + 1).as_str());
 
+        code = code.trim_end().to_string();
+        code.push_str("\n}\n");
+
+        code
+    }
+}
+
+impl Generator for Vec<Class> {
+    fn generate(&self, indentation: Indentation, level: usize) -> String {
+        let mut code = String::new();
+        if self.is_empty() {
+            return code;
+        }
+
+        for class in self {
+            code.push_str(class.generate(indentation, level).as_str());
             code.push('\n');
         }
-
-        if !self.constants.is_empty() {
-            code.push_str(
-                &self
-                    .constants
-                    .iter()
-                    .map(|constant| constant.generate(indentation, level + 1))
-                    .collect::<Vec<String>>()
-                    .join("\n"),
-            );
-
-            code.push('\n');
-        }
-
-        if !self.properties.is_empty() {
-            code.push_str(
-                &self
-                    .properties
-                    .iter()
-                    .map(|property| property.generate(indentation, level + 1))
-                    .collect::<Vec<String>>()
-                    .join("\n"),
-            );
-
-            code.push('\n');
-        }
-
-        if !self.methods.is_empty() {
-            code.push_str(
-                &self
-                    .methods
-                    .iter()
-                    .map(|method| method.generate(indentation, level + 1))
-                    .collect::<Vec<String>>()
-                    .join("\n"),
-            );
-        }
-
-        code.push_str("}\n");
 
         code
     }

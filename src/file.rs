@@ -5,6 +5,7 @@ use crate::constant::Constant;
 use crate::function::Function;
 use crate::interface::Interface;
 use crate::literal::Value;
+use crate::r#enum::Enum;
 use crate::r#trait::Trait;
 use crate::Generator;
 use crate::Indentation;
@@ -20,6 +21,7 @@ pub struct File {
     pub constants: Vec<Constant>,
     pub classes: Vec<Class>,
     pub traits: Vec<Trait>,
+    pub enums: Vec<Enum>,
     pub interfaces: Vec<Interface>,
 }
 
@@ -35,6 +37,7 @@ impl File {
             functions: vec![],
             classes: vec![],
             traits: vec![],
+            enums: vec![],
             interfaces: vec![],
         }
     }
@@ -89,6 +92,12 @@ impl File {
 
     pub fn r#trait(mut self, r#trait: Trait) -> Self {
         self.traits.push(r#trait);
+
+        self
+    }
+
+    pub fn r#enum(mut self, r#enum: Enum) -> Self {
+        self.enums.push(r#enum);
 
         self
     }
@@ -150,33 +159,15 @@ impl Generator for File {
             code.push('\n');
         }
 
-        if !self.constants.is_empty() {
-            for constant in &self.constants {
-                code.push_str(&constant.generate(indentation, level));
-            }
+        code.push_str(self.constants.generate(indentation, level).as_str());
+        code.push_str(self.functions.generate(indentation, level).as_str());
+        code.push_str(self.classes.generate(indentation, level).as_str());
+        code.push_str(self.traits.generate(indentation, level).as_str());
+        code.push_str(self.enums.generate(indentation, level).as_str());
+        code.push_str(self.interfaces.generate(indentation, level).as_str());
 
-            code.push('\n');
-        }
-
-        for function in &self.functions {
-            code.push_str(&function.generate(indentation, level));
-            code.push('\n');
-        }
-
-        for class in &self.classes {
-            code.push_str(&class.generate(indentation, level));
-            code.push('\n');
-        }
-
-        for r#trait in &self.traits {
-            code.push_str(&r#trait.generate(indentation, level));
-            code.push('\n');
-        }
-
-        for interface in &self.interfaces {
-            code.push_str(&interface.generate(indentation, level));
-            code.push('\n');
-        }
+        code = code.trim_end().to_string();
+        code.push('\n');
 
         code
     }
