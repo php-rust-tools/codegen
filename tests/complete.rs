@@ -19,7 +19,8 @@ use php_codegen::r#trait::Trait;
 use php_codegen::usage::Usage;
 use php_codegen::Indentation;
 
-fn main() {
+#[test]
+fn test_code_generation() {
     let file = File::new()
         .namespaced("Foo")
         .declare("strict_types", 1)
@@ -363,5 +364,5 @@ fn main() {
                 ),
         );
 
-    print!("{file}");
+    assert_eq!(include_str!("complete.php"), file.to_string(),);
 }
