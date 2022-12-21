@@ -1,7 +1,6 @@
 # PHP-Codegen
 
-Generate PHP code from Rust using a fluent API.
-
+Generate PHP code from Rust using a fluent API 🐘 🦀
 
  Rust                                           | PHP
 :----------------------------------------------:|:----------------------------------------------:
