@@ -34,14 +34,20 @@ impl Generator for AttributeGroup {
                     if let Some(arguments) = arguments {
                         format!("{}({})", name, arguments)
                     } else {
-                        format!("{}", name)
+                        name.to_string()
                     }
                 })
                 .collect::<Vec<String>>()
                 .join(", "),
         );
-        result.push_str("]");
+        result.push_str("]\n");
 
         result
+    }
+}
+
+impl Default for AttributeGroup {
+    fn default() -> Self {
+        Self::new()
     }
 }

@@ -79,13 +79,13 @@ impl File {
     }
 
     pub fn class(mut self, class: Class) -> Self {
-        self.classes.push(class.into());
+        self.classes.push(class);
 
         self
     }
 
     pub fn interface(mut self, interface: Interface) -> Self {
-        self.interfaces.push(interface.into());
+        self.interfaces.push(interface);
 
         self
     }
@@ -116,7 +116,7 @@ impl Generator for File {
                 code.push_str(&format!("use {};\n", r#use));
             }
 
-            code.push_str("\n");
+            code.push('\n');
         }
 
         if !self.function_uses.is_empty() {
@@ -125,7 +125,7 @@ impl Generator for File {
                 code.push_str(&format!("use function {};\n", function));
             }
 
-            code.push_str("\n");
+            code.push('\n');
         }
 
         if !self.constant_uses.is_empty() {
@@ -134,11 +134,11 @@ impl Generator for File {
                 code.push_str(&format!("use const {};\n", constant));
             }
 
-            code.push_str("\n");
+            code.push('\n');
         }
 
         if used {
-            code.push_str("\n");
+            code.push('\n');
         }
 
         if !self.constants.is_empty() {
@@ -146,22 +146,22 @@ impl Generator for File {
                 code.push_str(&constant.generate(indentation, level));
             }
 
-            code.push_str("\n");
+            code.push('\n');
         }
 
         for function in &self.functions {
             code.push_str(&function.generate(indentation, level));
-            code.push_str("\n");
+            code.push('\n');
         }
 
         for class in &self.classes {
             code.push_str(&class.generate(indentation, level));
-            code.push_str("\n");
+            code.push('\n');
         }
 
         for interface in &self.interfaces {
             code.push_str(&interface.generate(indentation, level));
-            code.push_str("\n");
+            code.push('\n');
         }
 
         code
@@ -170,6 +170,12 @@ impl Generator for File {
 
 impl Display for File {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.generate(Indentation::Spaces(4), 0))
+        write!(f, "{}", self.generate(Indentation::default(), 0))
+    }
+}
+
+impl Default for File {
+    fn default() -> Self {
+        Self::new()
     }
 }

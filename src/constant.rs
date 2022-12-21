@@ -152,7 +152,7 @@ impl Generator for ClassConstant {
                     .join("\n"),
             );
 
-            code.push_str("\n");
+            code.push('\n');
         }
 
         if let Some(visibility) = &self.visibility {

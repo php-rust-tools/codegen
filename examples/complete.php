@@ -62,7 +62,7 @@ function format(
  *
  * @immutable
  */
-abstract class Example
+abstract class Example extends Foo\Bar\Baz implements Foo\Bar\BazInterface
 {
     final const A = "Hello World!";
 
@@ -119,7 +119,13 @@ abstract class Example
     }
 }
 
-interface Formatter
+/**
+ * This is a simple formatter interface.
+ *
+ * @immutable
+ */
+#[Foo(foo: 1, bar: 2), Bar(foo: 1, bar: 2)]
+interface Formatter extends Qux
 {
     public function format(
         string $template,

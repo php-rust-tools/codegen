@@ -27,20 +27,20 @@ pub enum DataType {
 }
 
 impl Generator for DataType {
-    fn generate(&self, indentation: Indentation, level: usize) -> String {
+    fn generate(&self, _indentation: Indentation, _level: usize) -> String {
         match self {
             DataType::Named(name) => name.to_string(),
             DataType::Nullable(inner) => {
-                format!("?{}", inner.generate(indentation, level))
+                format!("?{}", inner.generate(_indentation, _level))
             }
             DataType::Union(inner) => inner
                 .iter()
-                .map(|t| t.generate(indentation, level))
+                .map(|t| t.generate(_indentation, _level))
                 .collect::<Vec<String>>()
                 .join("|"),
             DataType::Intersection(inner) => inner
                 .iter()
-                .map(|t| t.generate(indentation, level))
+                .map(|t| t.generate(_indentation, _level))
                 .collect::<Vec<String>>()
                 .join("&"),
             DataType::Null => "null".to_string(),

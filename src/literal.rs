@@ -72,7 +72,7 @@ impl<T: Into<Value>> From<Vec<(T, T)>> for Value {
 }
 
 impl Generator for Value {
-    fn generate(&self, identation: Indentation, level: usize) -> String {
+    fn generate(&self, _identation: Indentation, _level: usize) -> String {
         match self {
             Value::Null => "null".to_string(),
             Value::True => "true".to_string(),
@@ -88,7 +88,7 @@ impl Generator for Value {
                 result.push_str(
                     &values
                         .iter()
-                        .map(|value| value.generate(identation, level))
+                        .map(|value| value.generate(_identation, _level))
                         .collect::<Vec<String>>()
                         .join(", "),
                 );
@@ -106,8 +106,8 @@ impl Generator for Value {
                         .map(|(key, value)| {
                             format!(
                                 "{} => {}",
-                                key.generate(identation, level),
-                                value.generate(identation, level)
+                                key.generate(_identation, _level),
+                                value.generate(_identation, _level)
                             )
                         })
                         .collect::<Vec<String>>()

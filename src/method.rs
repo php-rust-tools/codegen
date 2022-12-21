@@ -105,17 +105,8 @@ impl Generator for Method {
             code.push_str(&document.generate(indentation, level));
         }
 
-        if !self.attributes.is_empty() {
-            code.push_str(
-                &self
-                    .attributes
-                    .iter()
-                    .map(|attributes| attributes.generate(indentation, level))
-                    .collect::<Vec<String>>()
-                    .join("\n"),
-            );
-
-            code.push_str("\n");
+        for attribute in &self.attributes {
+            code.push_str(&attribute.generate(indentation, level));
         }
 
         code.push_str(&indentation.value(level));
@@ -133,7 +124,7 @@ impl Generator for Method {
                     .join(" "),
             );
 
-            code.push_str(" ");
+            code.push(' ');
         }
 
         code.push_str(format!("function {}", self.name).as_str());

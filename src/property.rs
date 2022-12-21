@@ -104,7 +104,7 @@ impl Generator for Property {
                     .join("\n"),
             );
 
-            code.push_str("\n");
+            code.push('\n');
         }
 
         if let Some(visibility) = &self.visibility {

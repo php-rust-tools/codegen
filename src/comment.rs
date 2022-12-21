@@ -18,7 +18,7 @@ impl Document {
         Self { elements: vec![] }
     }
 
-    pub fn add(mut self, element: Element) -> Self {
+    pub fn add_element(mut self, element: Element) -> Self {
         self.elements.push(element);
 
         self
@@ -46,7 +46,7 @@ impl Document {
 
     pub fn text<T: ToString>(mut self, text: T) -> Self {
         self.elements
-            .push(Element::Text(format!("{}\n", text.to_string()).to_owned()));
+            .push(Element::Text(format!("{}\n", text.to_string())));
 
         self
     }
@@ -88,5 +88,11 @@ impl Generator for Element {
             Element::Text(text) => text.to_string(),
             Element::EmptyLine => String::new(),
         }
+    }
+}
+
+impl Default for Document {
+    fn default() -> Self {
+        Self::new()
     }
 }

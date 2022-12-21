@@ -46,11 +46,11 @@ impl Generator for Body {
                 let mut code = String::new();
 
                 code.push_str(" {");
-                code.push_str("\n");
+                code.push('\n');
                 code.push_str(&factory(indentation, level + 1));
-                code.push_str("\n");
+                code.push('\n');
                 code.push_str(&indentation.indent("}", level));
-                code.push_str("\n");
+                code.push('\n');
 
                 code
             }
@@ -58,16 +58,16 @@ impl Generator for Body {
                 let mut code = String::new();
 
                 if self.semicolon_for_empty {
-                    code.push_str(";");
+                    code.push(';');
                 } else {
                     code.push_str(" {");
-                    code.push_str("\n");
+                    code.push('\n');
                     code.push_str(&indentation.indent("// empty body", level + 1));
-                    code.push_str("\n");
+                    code.push('\n');
                     code.push_str(&indentation.indent("}", level));
                 }
 
-                code.push_str("\n");
+                code.push('\n');
 
                 code
             }

@@ -53,13 +53,13 @@ impl Class {
         self
     }
 
-    pub fn extend<T: ToString>(mut self, extends: T) -> Self {
+    pub fn extends<T: ToString>(mut self, extends: T) -> Self {
         self.extends = Some(extends.to_string());
 
         self
     }
 
-    pub fn implement<T: ToString>(mut self, implements: T) -> Self {
+    pub fn implements<T: ToString>(mut self, implements: T) -> Self {
         self.implements.push(implements.to_string());
 
         self
@@ -129,7 +129,7 @@ impl Generator for Class {
                     .join("\n"),
             );
 
-            code.push_str("\n");
+            code.push('\n');
         }
 
         if !self.properties.is_empty() {
@@ -142,7 +142,7 @@ impl Generator for Class {
                     .join("\n"),
             );
 
-            code.push_str("\n");
+            code.push('\n');
         }
 
         if !self.methods.is_empty() {

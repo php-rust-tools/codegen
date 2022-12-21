@@ -32,7 +32,7 @@ impl Interface {
         self
     }
 
-    pub fn extend<T: ToString>(mut self, extends: T) -> Self {
+    pub fn extends<T: ToString>(mut self, extends: T) -> Self {
         self.extends = Some(extends.to_string());
 
         self

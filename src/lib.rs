@@ -13,7 +13,7 @@ pub mod modifiers;
 pub mod parameter;
 pub mod property;
 
-#[derive(Debug, PartialEq, PartialOrd, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Clone, Copy)]
 pub enum Indentation {
     Spaces(usize),
     Tabs(usize),
@@ -41,6 +41,12 @@ impl std::fmt::Display for Indentation {
             Indentation::Spaces(count) => write!(f, "{:1$}", " ", count),
             Indentation::Tabs(count) => write!(f, "{:1$}", "\t", count),
         }
+    }
+}
+
+impl Default for Indentation {
+    fn default() -> Self {
+        Indentation::Spaces(4)
     }
 }
 

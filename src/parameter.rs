@@ -89,21 +89,11 @@ impl Generator for Parameter {
     fn generate(&self, indentation: Indentation, level: usize) -> String {
         let mut code = String::new();
 
-        if !self.attributes.is_empty() {
-            code.push_str(
-                &self
-                    .attributes
-                    .iter()
-                    .map(|attributes| attributes.generate(indentation, level))
-                    .collect::<Vec<String>>()
-                    .join("\n"),
-            );
-
-            code.push_str("\n");
-            code.push_str(&indentation.value(level));
-        } else {
-            code.push_str(&indentation.value(level));
+        for attribute in &self.attributes {
+            code.push_str(&attribute.generate(indentation, level));
         }
+
+        code.push_str(&indentation.value(level));
 
         if let Some(visibility) = &self.visibility {
             code.push_str(&format!("{} ", visibility.generate(indentation, level)));
