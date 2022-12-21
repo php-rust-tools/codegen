@@ -14,6 +14,7 @@ pub struct Parameter {
     pub default: Option<Value>,
     pub modifiers: Vec<Modifier>,
     pub visibility: Option<VisibilityModifier>,
+    pub variadic: bool,
 }
 
 impl Parameter {
@@ -25,6 +26,7 @@ impl Parameter {
             modifiers: vec![],
             attributes: vec![],
             visibility: None,
+            variadic: false,
         }
     }
 
@@ -36,6 +38,12 @@ impl Parameter {
 
     pub fn typed(mut self, data_type: DataType) -> Self {
         self.data_type = Some(data_type);
+
+        self
+    }
+
+    pub fn variadic(mut self) -> Self {
+        self.variadic = true;
 
         self
     }
@@ -107,6 +115,10 @@ impl Generator for Parameter {
 
         if let Some(data_type) = &self.data_type {
             code.push_str(&format!("{} ", data_type.generate(indentation, level)));
+        }
+
+        if self.variadic {
+            code.push_str("...");
         }
 
         code.push_str(&format!("${}", &self.name));
