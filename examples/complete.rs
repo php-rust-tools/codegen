@@ -6,6 +6,7 @@ use php_codegen::constant::Constant;
 use php_codegen::data_type::DataType;
 use php_codegen::file::File;
 use php_codegen::function::Function;
+use php_codegen::interface::Interface;
 use php_codegen::literal::Value;
 use php_codegen::method::Method;
 use php_codegen::modifiers::Modifier;
@@ -171,6 +172,23 @@ fn main() {
                             indentation.indent("echo 'Hello World!';", level)
                         }),
                 ),
+        )
+        .interface(
+            Interface::new("Formatter").method(
+                Method::new("format")
+                    .parameter(Parameter::new("template").typed(DataType::String))
+                    .parameter(
+                        Parameter::new("args")
+                            .variadic()
+                            .typed(DataType::Union(vec![
+                                DataType::Integer,
+                                DataType::Float,
+                                DataType::String,
+                                DataType::Null,
+                            ])),
+                    )
+                    .returns(DataType::String),
+            ),
         );
 
     print!("{file}");
