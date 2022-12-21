@@ -48,7 +48,7 @@ impl Generator for DataType {
             DataType::False => "false".to_string(),
             DataType::Float => "float".to_string(),
             DataType::Boolean => "bool".to_string(),
-            DataType::Integer => "integer".to_string(),
+            DataType::Integer => "int".to_string(),
             DataType::String => "string".to_string(),
             DataType::Array => "array".to_string(),
             DataType::Object => "object".to_string(),

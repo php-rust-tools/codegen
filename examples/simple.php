@@ -66,7 +66,7 @@ abstract class Example
 
     protected string $bar;
 
-    public string|integer $baz = "Hello World!";
+    public string|int $baz = "Hello World!";
 
     /**
      * This is a simple hello function.
