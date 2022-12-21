@@ -3,6 +3,7 @@ use std::fmt::Display;
 use crate::class::Class;
 use crate::constant::Constant;
 use crate::function::Function;
+use crate::interface::Interface;
 use crate::literal::Value;
 use crate::Generator;
 use crate::Indentation;
@@ -17,6 +18,7 @@ pub struct File {
     pub functions: Vec<Function>,
     pub constants: Vec<Constant>,
     pub classes: Vec<Class>,
+    pub interfaces: Vec<Interface>,
 }
 
 impl File {
@@ -30,6 +32,7 @@ impl File {
             constants: vec![],
             functions: vec![],
             classes: vec![],
+            interfaces: vec![],
         }
     }
 
@@ -77,6 +80,12 @@ impl File {
 
     pub fn class(mut self, class: Class) -> Self {
         self.classes.push(class.into());
+
+        self
+    }
+
+    pub fn interface(mut self, interface: Interface) -> Self {
+        self.interfaces.push(interface.into());
 
         self
     }
@@ -147,6 +156,11 @@ impl Generator for File {
 
         for class in &self.classes {
             code.push_str(&class.generate(indentation, level));
+            code.push_str("\n");
+        }
+
+        for interface in &self.interfaces {
+            code.push_str(&interface.generate(indentation, level));
             code.push_str("\n");
         }
 
