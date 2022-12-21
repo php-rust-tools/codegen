@@ -2,9 +2,20 @@
 
 Generate PHP code from Rust using a fluent API 🐘 🦀
 
+[![Actions Status](https://github.com/php-rust-tools/codegen/workflows/ci/badge.svg)](https://github.com/php-rust-tools/codegen/actions)
+[![Crates.io](https://img.shields.io/crates/v/php_codegen.svg)](https://crates.io/crates/php_codegen)
+[![Docs](https://docs.rs/php_codegen/badge.svg)](https://docs.rs/php_codegen/latest/php_codegen/)
+
  Rust                                           | PHP
 :----------------------------------------------:|:----------------------------------------------:
 [![](screenshots/rust.png)](examples/simple.rs) | [![](screenshots/php.png)](examples/simple.php)
+
+
+## Usage
+
+To bring this crate into your repository, either add `php_codegen` to your `Cargo.toml`, or run `cargo add php_codegen`.
+
+See the [examples](examples) directory for more examples.
 
 ## License
 
