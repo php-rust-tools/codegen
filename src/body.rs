@@ -75,6 +75,27 @@ impl Generator for Body {
     }
 }
 
+impl<T: ToString> From<Vec<T>> for Body {
+    fn from(body: Vec<T>) -> Self {
+        let body = body
+            .iter()
+            .map(|line| line.to_string())
+            .collect::<Vec<String>>();
+
+        Self {
+            factory: Some(Box::new(move |indentation, level| {
+                let body = body.clone();
+
+                body.iter()
+                    .map(|line| indentation.indent(&line.to_string(), level))
+                    .collect::<Vec<String>>()
+                    .join("\n")
+            })),
+            semicolon_for_empty: true,
+        }
+    }
+}
+
 impl From<String> for Body {
     fn from(body: String) -> Self {
         Self {
