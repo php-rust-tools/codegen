@@ -1,5 +1,13 @@
 # PHP-Codegen
 
+Generate PHP code from Rust using a fluent API.
+
+<table>
+  <tr>
+    <td><img src="screenshots/rust.png" ></td>
+    <td><img src="screenshots/php.png" ></td>
+  </tr>
+ </table>
 
 ## Roadmap
 
