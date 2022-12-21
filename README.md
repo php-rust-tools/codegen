@@ -28,7 +28,7 @@ Generate PHP code from Rust using a fluent API 🐘 🦀
 - [ ] Code generation for enums
 - [ ] Code generation for traits
 - [ ] Code generation for trait use statements
-- [ ] Code generation for variadic parameters
+- [x] Code generation for variadic parameters
 
 ## License
 
