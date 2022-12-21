@@ -11,6 +11,7 @@ pub mod method;
 pub mod modifiers;
 pub mod parameter;
 pub mod property;
+pub mod interface;
 
 #[derive(Debug, PartialEq, PartialOrd, Clone, Copy)]
 pub enum Indentation {
