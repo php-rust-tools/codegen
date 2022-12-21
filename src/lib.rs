@@ -12,6 +12,7 @@ pub mod method;
 pub mod modifiers;
 pub mod parameter;
 pub mod property;
+pub mod r#trait;
 pub mod usage;
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Clone, Copy)]

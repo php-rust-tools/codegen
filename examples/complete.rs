@@ -13,6 +13,7 @@ use php_codegen::modifiers::Modifier;
 use php_codegen::modifiers::VisibilityModifier;
 use php_codegen::parameter::Parameter;
 use php_codegen::property::Property;
+use php_codegen::r#trait::Trait;
 use php_codegen::usage::Usage;
 use php_codegen::Indentation;
 
@@ -126,6 +127,97 @@ fn main() {
                     .constant(ClassConstant::new("B").valued(()).protected())
                     .constant(ClassConstant::new("C").valued(1).private())
                     .constant(ClassConstant::new("D").valued(false).public())
+                    .property(Property::new("foo").typed(DataType::String).private())
+                    .property(Property::new("bar").typed(DataType::String).protected())
+                    .property(
+                        Property::new("baz")
+                            .typed(DataType::Union(vec![DataType::String, DataType::Integer]))
+                            .public()
+                            .default("Hello World!"),
+                    )
+                    .method(
+                        Method::new("hello")
+                            .returns(DataType::String)
+                            .parameter(Parameter::new("firstname").typed(DataType::String))
+                            .parameter(
+                                Parameter::new("lastname")
+                                    .typed(DataType::String)
+                                    .default(Value::Literal("Qux::Foo".to_string())),
+                            )
+                            .body("return 'Hello ' . $firstname . ' ' . $lastname . '!';")
+                            .attributes(
+                                AttributeGroup::new()
+                                    .add("Qux", Some("foo: 1, bar: 2"))
+                                    .add("Qux", Some("foo: 1, bar: 2")),
+                            )
+                            .document(
+                                Document::new()
+                                    .text("This is a simple hello function.")
+                                    .empty_line()
+                                    .tag("param", "non-empty-string $firstname")
+                                    .empty_line()
+                                    .tag("return", "string")
+                                    .empty_line()
+                                    .simple_tag("pure"),
+                            ),
+                    )
+                    .method(
+                        Method::new("x")
+                            .public()
+                            .returns(DataType::Mixed)
+                            .body("return 'Hello!';")
+                            .attributes(
+                                AttributeGroup::new()
+                                    .add("Foo", Some("foo: 1, bar: 2"))
+                                    .add("Bar", Some("foo: 1, bar: 2")),
+                            )
+                            .attributes(AttributeGroup::new().add("Baz", None).add("Qux", None))
+                            .document(
+                                Document::new()
+                                    .text("This is a simple x function.")
+                                    .empty_line()
+                                    .simple_tag("pure"),
+                            ),
+                    )
+                    .method(
+                        Method::new("poop")
+                            .public()
+                            .modifier(Modifier::Abstract)
+                            .returns(DataType::Void)
+                            .document(Document::new().text("This is a simple poop function.")),
+                    )
+                    .method(
+                        Method::new("helloWorld")
+                            .public()
+                            .modifier(Modifier::Final)
+                            .returns(DataType::Void)
+                            .document(Document::new().text("This is a simple echo function."))
+                            .body(|indentation: Indentation, level| {
+                                indentation.indent("echo 'Hello World!';", level)
+                            }),
+                    ),
+            )
+            .r#trait(
+                Trait::new("ExampleTrait")
+                    .document(Document::new().text("This is an example trait."))
+                    .using("A")
+                    .using(vec!["B", "C"])
+                    .using(
+                        Usage::new(vec![
+                            "D".to_string(),
+                            "E".to_string(),
+                            "F".to_string(),
+                            "G".to_string(),
+                        ])
+                        .rename("E::bar", "baz")
+                        .alias("D::foo", "bar", VisibilityModifier::Public)
+                        .public("E::qux")
+                        .protected("D::format")
+                        .private("D::d")
+                        .precede("D::drop", vec!["E"])
+                        .precede("G::something", vec!["E", "F", "D"])
+                        .visibility("E::e", VisibilityModifier::Protected),
+                    )
                     .property(Property::new("foo").typed(DataType::String).private())
                     .property(Property::new("bar").typed(DataType::String).protected())
                     .property(

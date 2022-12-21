@@ -135,6 +135,73 @@ abstract class Example extends Foo\Bar\Baz implements Foo\Bar\BazInterface
 }
 
 /**
+ * This is an example trait.
+ */
+trait ExampleTrait
+{
+    use A;
+
+    use B, C;
+
+    use D, E, F, G {
+        E::bar as baz;
+        D::foo as public bar;
+        E::qux as public;
+        D::format as protected;
+        D::d as private;
+        D::drop insteadof E;
+        G::something insteadof E, F, D;
+        E::e as protected;
+    }
+
+    private string $foo;
+
+    protected string $bar;
+
+    public string|int $baz = "Hello World!";
+
+    /**
+     * This is a simple hello function.
+     *
+     * @param non-empty-string $firstname
+     *
+     * @return string
+     *
+     * @pure
+     */
+    #[Qux(foo: 1, bar: 2), Qux(foo: 1, bar: 2)]
+    function hello(
+        string $firstname,
+        string $lastname = Qux::Foo,
+    ): string {
+        return 'Hello ' . $firstname . ' ' . $lastname . '!';
+    }
+
+    /**
+     * This is a simple x function.
+     *
+     * @pure
+     */
+    #[Foo(foo: 1, bar: 2), Bar(foo: 1, bar: 2)]
+    #[Baz, Qux]
+    public function x(): mixed {
+        return 'Hello!';
+    }
+
+    /**
+     * This is a simple poop function.
+     */
+    public abstract function poop(): void;
+
+    /**
+     * This is a simple echo function.
+     */
+    public final function helloWorld(): void {
+        echo 'Hello World!';
+    }
+}
+
+/**
  * This is a simple formatter interface.
  *
  * @immutable

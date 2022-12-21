@@ -5,6 +5,7 @@ use crate::constant::Constant;
 use crate::function::Function;
 use crate::interface::Interface;
 use crate::literal::Value;
+use crate::r#trait::Trait;
 use crate::Generator;
 use crate::Indentation;
 
@@ -18,6 +19,7 @@ pub struct File {
     pub functions: Vec<Function>,
     pub constants: Vec<Constant>,
     pub classes: Vec<Class>,
+    pub traits: Vec<Trait>,
     pub interfaces: Vec<Interface>,
 }
 
@@ -32,6 +34,7 @@ impl File {
             constants: vec![],
             functions: vec![],
             classes: vec![],
+            traits: vec![],
             interfaces: vec![],
         }
     }
@@ -80,6 +83,12 @@ impl File {
 
     pub fn class(mut self, class: Class) -> Self {
         self.classes.push(class);
+
+        self
+    }
+
+    pub fn r#trait(mut self, r#trait: Trait) -> Self {
+        self.traits.push(r#trait);
 
         self
     }
@@ -156,6 +165,11 @@ impl Generator for File {
 
         for class in &self.classes {
             code.push_str(&class.generate(indentation, level));
+            code.push('\n');
+        }
+
+        for r#trait in &self.traits {
+            code.push_str(&r#trait.generate(indentation, level));
             code.push('\n');
         }
 
