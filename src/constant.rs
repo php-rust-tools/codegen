@@ -23,7 +23,7 @@ impl Constant {
         }
     }
 
-    pub fn documented<T: ToString>(mut self, documentation: Document) -> Self {
+    pub fn document(mut self, documentation: Document) -> Self {
         self.documentation = Some(documentation);
 
         self
@@ -104,7 +104,7 @@ impl ClassConstant {
         }
     }
 
-    pub fn documented<T: ToString>(mut self, documentation: Document) -> Self {
+    pub fn document(mut self, documentation: Document) -> Self {
         self.documentation = Some(documentation);
 
         self
