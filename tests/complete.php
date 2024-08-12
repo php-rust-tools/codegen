@@ -49,9 +49,7 @@ function hello(
     return 'Hello ' . $firstname . ' ' . $lastname . '!';
 }
 
-function nothing(): void {
-    // empty body
-}
+function nothing(): void {}
 
 function format(
     string $template,
@@ -90,6 +88,8 @@ abstract class Example extends Foo\Bar\Baz implements Foo\Bar\BazInterface
     private const C = 1;
 
     public const D = false;
+
+    public const bool E = false;
 
     private string $foo;
 

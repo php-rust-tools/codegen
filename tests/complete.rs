@@ -1,3 +1,5 @@
+use pretty_assertions::assert_eq;
+
 use php_codegen::attribute::AttributeGroup;
 use php_codegen::class::Class;
 use php_codegen::comment::Document;
@@ -129,6 +131,12 @@ fn test_code_generation() {
                 .constant(ClassConstant::new("B").valued(()).protected())
                 .constant(ClassConstant::new("C").valued(1).private())
                 .constant(ClassConstant::new("D").valued(false).public())
+                .constant(
+                    ClassConstant::new("E")
+                        .typed(DataType::Boolean)
+                        .valued(false)
+                        .public(),
+                )
                 .property(Property::new("foo").typed(DataType::String).private())
                 .property(Property::new("bar").typed(DataType::String).protected())
                 .property(

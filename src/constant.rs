@@ -1,5 +1,6 @@
 use crate::attribute::AttributeGroup;
 use crate::comment::Document;
+use crate::data_type::DataType;
 use crate::literal::Value;
 use crate::modifiers::Modifier;
 use crate::modifiers::VisibilityModifier;
@@ -85,6 +86,7 @@ pub struct ClassConstant {
     pub attributes: Vec<AttributeGroup>,
     pub visibility: Option<VisibilityModifier>,
     pub modifiers: Vec<Modifier>,
+    pub data_type: Option<DataType>,
     pub name: String,
     pub value: Value,
 }
@@ -96,6 +98,7 @@ impl ClassConstant {
             attributes: vec![],
             visibility: None,
             modifiers: vec![],
+            data_type: None,
             name: name.to_string(),
             value: Value::Null,
         }
@@ -143,6 +146,12 @@ impl ClassConstant {
         self
     }
 
+    pub fn typed<T: Into<DataType>>(mut self, data_type: T) -> Self {
+        self.data_type = Some(data_type.into());
+
+        self
+    }
+
     pub fn valued<T: Into<Value>>(mut self, value: T) -> Self {
         self.value = value.into();
 
@@ -172,11 +181,20 @@ impl Generator for ClassConstant {
             code.push_str(&format!("{} ", modifier.generate(indentation, level)));
         }
 
-        code.push_str(&format!(
-            "const {} = {};\n",
-            self.name,
-            self.value.generate(indentation, level)
-        ));
+        if let Some(data_type) = &self.data_type {
+            code.push_str(&format!(
+                "const {} {} = {};\n",
+                data_type.generate(indentation, level),
+                self.name,
+                self.value.generate(indentation, level)
+            ));
+        } else {
+            code.push_str(&format!(
+                "const {} = {};\n",
+                self.name,
+                self.value.generate(indentation, level)
+            ));
+        }
 
         code
     }
@@ -205,6 +223,7 @@ impl<T: ToString, Tv: Into<Value>> From<(T, Tv)> for ClassConstant {
             attributes: vec![],
             visibility: None,
             modifiers: vec![],
+            data_type: None,
             name: name.to_string(),
             value: value.into(),
         }

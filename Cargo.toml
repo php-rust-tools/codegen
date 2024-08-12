@@ -1,6 +1,6 @@
 [package]
 name = "php_codegen"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 description = "Generate PHP code from Rust using a fluent API 🐘 🦀"
 readme = "README.md"
@@ -15,3 +15,6 @@ keywords = ["php", "codegen", "code-generation", "php-rust-tools"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+
+[dev-dependencies]
+pretty_assertions = "1.4.0"

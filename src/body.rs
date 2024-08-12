@@ -60,11 +60,7 @@ impl Generator for Body {
                 if self.semicolon_for_empty {
                     code.push(';');
                 } else {
-                    code.push_str(" {");
-                    code.push('\n');
-                    code.push_str(&indentation.indent("// empty body", level + 1));
-                    code.push('\n');
-                    code.push_str(&indentation.indent("}", level));
+                    code.push_str(" {}");
                 }
 
                 code.push('\n');
@@ -87,7 +83,7 @@ impl<T: ToString> From<Vec<T>> for Body {
                 let body = body.clone();
 
                 body.iter()
-                    .map(|line| indentation.indent(&line.to_string(), level))
+                    .map(|line| indentation.indent(line.to_string(), level))
                     .collect::<Vec<String>>()
                     .join("\n")
             })),
