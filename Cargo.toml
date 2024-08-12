@@ -1,6 +1,6 @@
 [package]
 name = "php_codegen"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 description = "Generate PHP code from Rust using a fluent API 🐘 🦀"
 readme = "README.md"
