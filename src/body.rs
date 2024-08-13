@@ -1,4 +1,4 @@
-use core::fmt::Debug;
+use std::fmt::Debug;
 
 use crate::Generator;
 use crate::Indentation;

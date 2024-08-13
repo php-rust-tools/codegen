@@ -84,7 +84,13 @@ impl Generator for Document {
 impl Generator for Element {
     fn generate(&self, _: Indentation, _: usize) -> String {
         match self {
-            Element::Tag(tag, description) => format!("@{} {}", tag, description),
+            Element::Tag(tag, description) => {
+                if description.is_empty() {
+                    format!("@{}", tag)
+                } else {
+                    format!("@{} {}", tag, description)
+                }
+            }
             Element::Text(text) => text.to_string(),
             Element::EmptyLine => String::new(),
         }

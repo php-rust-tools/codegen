@@ -1,4 +1,8 @@
-use crate::{attribute::AttributeGroup, comment::Document, method::Method, Generator, Indentation};
+use crate::attribute::AttributeGroup;
+use crate::comment::Document;
+use crate::method::Method;
+use crate::Generator;
+use crate::Indentation;
 
 #[derive(Debug)]
 pub struct Interface {

@@ -16,6 +16,8 @@ use php_codegen::modifiers::Modifier;
 use php_codegen::modifiers::VisibilityModifier;
 use php_codegen::parameter::Parameter;
 use php_codegen::property::Property;
+use php_codegen::property::PropertyHook;
+use php_codegen::property::PropertySetHookParameter;
 use php_codegen::r#enum::Enum;
 use php_codegen::r#trait::Trait;
 use php_codegen::usage::Usage;
@@ -205,6 +207,65 @@ fn test_code_generation() {
                         .body(|indentation: Indentation, level| {
                             indentation.indent("echo 'Hello World!';", level)
                         }),
+                ),
+        )
+        .class(
+            Class::new("SimpleUser")
+                .property(
+                    Property::new("firstName")
+                        .typed(DataType::String)
+                        .visibility(VisibilityModifier::Private)
+                        .default(Value::String("Jane".to_string())),
+                )
+                .property(
+                    Property::new("lastName")
+                        .typed(DataType::String)
+                        .visibility(VisibilityModifier::Private)
+                        .default(Value::String("Doe".to_string())),
+                )
+                .property(
+                    Property::new("fullname")
+                        .typed(DataType::String)
+                        .visibility(VisibilityModifier::Public)
+                        .hook(PropertyHook::Get(
+                            false,
+                            vec!["return $this->firstName . ' ' . $this->lastName;"].into(),
+                        ))
+                        .hook(PropertyHook::Set(
+                            Some(
+                                PropertySetHookParameter::new("$fullname").typed(DataType::String),
+                            ),
+                            vec![
+                                "[$first, $last] = explode(' ', $fullname);",
+                                "$this->firstName = $first;",
+                                "$this->lastName = $last;",
+                            ]
+                            .into(),
+                        )),
+                ),
+        )
+        .class(
+            Class::new("SimpleUser2")
+                .property(
+                    Property::new("firstName")
+                        .typed(DataType::String)
+                        .visibility(VisibilityModifier::Private)
+                        .default(Value::String("Jane".to_string())),
+                )
+                .property(
+                    Property::new("lastName")
+                        .typed(DataType::String)
+                        .visibility(VisibilityModifier::Private)
+                        .default(Value::String("Doe".to_string())),
+                )
+                .property(
+                    Property::new("fullname")
+                        .typed(DataType::String)
+                        .visibility(VisibilityModifier::Public)
+                        .hook(PropertyHook::Get(
+                            false,
+                            vec!["return $this->firstName . ' ' . $this->lastName;"].into(),
+                        )),
                 ),
         )
         .r#trait(

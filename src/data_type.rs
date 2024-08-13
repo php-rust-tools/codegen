@@ -31,7 +31,7 @@ impl Generator for DataType {
         match self {
             DataType::Named(name) => name.to_string(),
             DataType::Nullable(inner) => {
-                format!("?{}", inner.generate(_indentation, _level))
+                format!("null|{}", inner.generate(_indentation, _level))
             }
             DataType::Union(inner) => inner
                 .iter()

@@ -92,11 +92,8 @@ abstract class Example extends Foo\Bar\Baz implements Foo\Bar\BazInterface
     public const bool E = false;
 
     private string $foo;
-
     protected string $bar;
-
     public string|int $baz = "Hello World!";
-
     /**
      * This is a simple hello function.
      *
@@ -138,6 +135,33 @@ abstract class Example extends Foo\Bar\Baz implements Foo\Bar\BazInterface
     }
 }
 
+class SimpleUser
+{
+    private string $firstName = "Jane";
+    private string $lastName = "Doe";
+    public string $fullname {
+        get {
+            return $this->firstName . ' ' . $this->lastName;
+        }
+        set (string $fullname) {
+            [$first, $last] = explode(' ', $fullname);
+            $this->firstName = $first;
+            $this->lastName = $last;
+        }
+    }
+}
+
+class SimpleUser2
+{
+    private string $firstName = "Jane";
+    private string $lastName = "Doe";
+    public string $fullname {
+        get {
+            return $this->firstName . ' ' . $this->lastName;
+        }
+    }
+}
+
 /**
  * This is an example trait.
  */
@@ -157,11 +181,8 @@ trait ExampleTrait
     }
 
     private string $foo;
-
     protected string $bar;
-
     public string|int $baz = "Hello World!";
-
     /**
      * This is a simple hello function.
      *
